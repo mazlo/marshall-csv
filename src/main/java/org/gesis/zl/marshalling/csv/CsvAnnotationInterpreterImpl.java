@@ -60,7 +60,14 @@ public class CsvAnnotationInterpreterImpl<T> implements CsvAnnotationInterpreter
 				int position = field.getAnnotation( OutputField.class ).position();
 
 				o_fieldNames.put( position, field.getName() );
-				o_columnNames.put( position, field.getAnnotation( OutputField.class ).name() );
+
+				// use field name as column name if not specified by the "name"
+				// property of OutputField
+				String columnName = field.getAnnotation( OutputField.class ).name();
+				if ( StringUtils.equals( columnName, OutputField.DEFAULT_COLUMN_NAME ) )
+					columnName = field.getName();
+
+				o_columnNames.put( position, columnName );
 			}
 		}
 

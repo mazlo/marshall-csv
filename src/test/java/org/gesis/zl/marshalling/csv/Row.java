@@ -23,6 +23,9 @@ public class Row {
 	@OutputField( position = 0, name = "name" )
 	private String target_name;
 
+	@OutputField( position = 2 )
+	private String just_a_column;
+
 	public int getId1()
 	{
 		return id1;
@@ -81,6 +84,16 @@ public class Row {
 	public void setTarget_description( String target_description )
 	{
 		this.target_description = target_description;
+	}
+
+	public String getJust_a_column()
+	{
+		return just_a_column;
+	}
+
+	public void setJust_a_column(String just_a_column)
+	{
+		this.just_a_column = just_a_column;
 	}
 
 }

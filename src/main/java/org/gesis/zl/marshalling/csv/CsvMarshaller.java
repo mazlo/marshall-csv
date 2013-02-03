@@ -99,8 +99,8 @@ public class CsvMarshaller<T> implements Marshaller<T> {
 				continue;
 			} catch ( NoSuchMethodException e )
 			{
-				System.err.println( "Could not set the value for the field:" + fieldName );
-				continue;
+				System.err.println( "Could not set the value for the field: " + fieldName + ". Setting empty value instead." );
+				value = "";
 			}
 
 			// set the value for the position
