@@ -35,10 +35,11 @@ public class CsvAnnotationInterpreterTest {
 	{
 		List<String> fields = reader.getOutputFieldNames();
 		assertNotNull( fields );
-		assertEquals( 2, fields.size() );
+		assertEquals( 3, fields.size() );
 
 		assertEquals( "target_name", fields.get( 0 ) );
 		assertEquals( "target_description", fields.get( 1 ) );
+		assertEquals( "just_a_column", fields.get( 2 ) );
 	}
 
 	@Test
@@ -46,10 +47,11 @@ public class CsvAnnotationInterpreterTest {
 	{
 		List<String> fields = reader.getOutputColumnNames();
 		assertNotNull( fields );
-		assertEquals( 2, fields.size() );
+		assertEquals( 3, fields.size() );
 
 		assertEquals( "name", fields.get( 0 ) );
 		assertEquals( "description", fields.get( 1 ) );
+		assertEquals( "just_a_column", fields.get( 2 ) );
 	}
 
 	@Test
