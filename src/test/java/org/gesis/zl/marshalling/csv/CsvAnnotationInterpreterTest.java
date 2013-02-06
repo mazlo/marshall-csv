@@ -16,7 +16,7 @@ public class CsvAnnotationInterpreterTest {
 	@Before
 	public void init()
 	{
-		reader = AnnotationInterpreterFactory.createCsvAnnotationReader( Row.class );
+		reader = AnnotationInterpreterFactory.createDefaultCsvAnnotationInterpreter( Row.class );
 		assertNotNull( reader );
 	}
 
