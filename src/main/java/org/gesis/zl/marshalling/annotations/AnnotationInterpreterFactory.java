@@ -7,12 +7,13 @@ public class AnnotationInterpreterFactory
 {
 
 	/**
-	 * Creates an annotation reader for the csv specific configurations.
+	 * Creates a default annotation interpreter for the csv specific
+	 * configurations.
 	 * 
 	 * @param annotatedClass
 	 * @return
 	 */
-	public static <T> CsvAnnotationInterpreter<T> createCsvAnnotationReader(Class<T> annotatedClass)
+	public static <T> CsvAnnotationInterpreter<T> createDefaultCsvAnnotationInterpreter(Class<T> annotatedClass)
 	{
 		return new CsvAnnotationInterpreterImpl<T>( annotatedClass );
 	}
