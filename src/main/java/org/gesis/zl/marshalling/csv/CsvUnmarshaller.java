@@ -1,6 +1,5 @@
 package org.gesis.zl.marshalling.csv;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +22,7 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 
 	boolean firstLineSkipped = false;
 
-	public CsvUnmarshaller( CsvAnnotationInterpreter<T> annotationReader, Reader reader ) throws FileNotFoundException
+	public CsvUnmarshaller(CsvAnnotationInterpreter<T> annotationReader, Reader reader)
 	{
 		this.annotationReader = annotationReader;
 		this.bean = annotationReader.getAnnotatedClass();
