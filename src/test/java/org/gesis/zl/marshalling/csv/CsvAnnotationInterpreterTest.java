@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import org.gesis.zl.marshalling.annotations.AnnotationInterpreterFactory;
+import org.gesis.zl.marshalling.annotations.CsvAnnotationInterpreterFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class CsvAnnotationInterpreterTest {
 	@Before
 	public void init()
 	{
-		reader = AnnotationInterpreterFactory.createDefaultCsvAnnotationInterpreter( Row.class );
+		reader = CsvAnnotationInterpreterFactory.createDefaultCsvAnnotationInterpreter( Row.class );
 		assertNotNull( reader );
 	}
 

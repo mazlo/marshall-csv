@@ -3,7 +3,7 @@ package org.gesis.zl.marshalling.annotations;
 import org.gesis.zl.marshalling.csv.CsvAnnotationInterpreter;
 import org.gesis.zl.marshalling.csv.CsvAnnotationInterpreterImpl;
 
-public class AnnotationInterpreterFactory
+public class CsvAnnotationInterpreterFactory
 {
 
 	/**
