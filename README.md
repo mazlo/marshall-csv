@@ -1,6 +1,6 @@
 Data stored in CSV-format (Comma Separated Values) can easily be mapped to fields of a plain old java object (POJO) using Java-annotations. 
 
-This package provides an implementation [marshall-api](https://github.com/mazlo/marshall-api), a generic api for marshalling and unmarshalling data using Java-annotations.
+This package provides an implementation for the [marshall-api](https://github.com/mazlo/marshall-api), a generic api for marshalling and unmarshalling data using Java-annotations.
 
 ## Usage
 
