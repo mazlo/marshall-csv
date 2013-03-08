@@ -1,0 +1,4 @@
+col1,col2,testcol1,testcol2,isTrue
+1,0,"test1","test2","x"
+0,1,"test2","test3","x"
+1,1,"",test4,""

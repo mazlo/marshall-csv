@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.gesis.zl.marshalling.Unmarshaller;
 
 import au.com.bytecode.opencsv.CSVReader;
 
 public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 
-	private CsvAnnotationInterpreter<T> annotationReader;
+	private CsvAnnotationInterpreter<T> annotationInterpreter;
 	private Class<T> bean;
 
 	private CSVReader csvReader;
@@ -24,11 +25,11 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 
 	public CsvUnmarshaller(CsvAnnotationInterpreter<T> annotationReader, Reader reader)
 	{
-		this.annotationReader = annotationReader;
+		this.annotationInterpreter = annotationReader;
 		this.bean = annotationReader.getAnnotatedClass();
 
 		// check if first line should be skipped
-		this.firstLineSkipped = !this.annotationReader.skipFirstLine();
+		this.firstLineSkipped = !this.annotationInterpreter.skipFirstLine();
 
 		this.reader = reader;
 		this.csvReader = createCsvReader();
@@ -75,7 +76,7 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 	 */
 	private CSVReader createCsvReader()
 	{
-		return new CSVReader( reader, this.annotationReader.getSeparator(), this.annotationReader.getQuotationCharacter() );
+		return new CSVReader( reader, this.annotationInterpreter.getSeparator(), this.annotationInterpreter.getQuotationCharacter() );
 	}
 
 	/*
@@ -91,7 +92,7 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 			return null;
 
 		// get the field mappings
-		List<String> fieldNames = this.annotationReader.getInputFieldNames();
+		List<String> fieldNames = this.annotationInterpreter.getInputFieldNames();
 
 		// the bean instance, i.e. new row
 		T instance;
@@ -103,7 +104,7 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 			// set the values for the fields of the bean
 			for ( String fieldName : fieldNames )
 			{
-				int position = annotationReader.getPositionOf( fieldName );
+				int position = annotationInterpreter.getPositionOf( fieldName );
 
 				if ( position < 0 )
 					continue;
@@ -113,9 +114,24 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 
 				String value = values[position];
 
-				if ( annotationReader.getIgnoredValues( fieldName ).contains( value ) )
+				if ( annotationInterpreter.getIgnoredValues( fieldName ).contains( value ) )
 					// ignore this value
 					continue;
+
+				// checks if column is of boolean type
+				if ( annotationInterpreter.isBooleanType( fieldName ) )
+				{
+					String defaultValue = annotationInterpreter.getDefaultValueForType( fieldName );
+
+					// the default value of the dataType property must be equal
+					// to the value in the cell
+					if ( StringUtils.equals( defaultValue, value ) )
+						BeanUtils.setProperty( instance, fieldName, Boolean.TRUE );
+					else
+						BeanUtils.setProperty( instance, fieldName, Boolean.FALSE );
+
+					continue;
+				}
 
 				BeanUtils.setProperty( instance, fieldName, value );
 			}
@@ -149,7 +165,7 @@ public class CsvUnmarshaller<T> implements Unmarshaller<T> {
 		try
 		{
 			// skip the first line if configurated so
-			if ( !this.firstLineSkipped && this.annotationReader.skipFirstLine() )
+			if ( !this.firstLineSkipped && this.annotationInterpreter.skipFirstLine() )
 			{
 				this.csvReader.readNext();
 				this.firstLineSkipped = true;
